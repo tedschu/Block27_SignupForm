@@ -1,16 +1,25 @@
 import {useState} from "react";
 
-function SignUp(){
+
+
+export default function SignUpForm({setToken}){
 
     const [form, setForm]=useState({
         username:"",
         password:""
     })
 
+    const [passError, setPassError]=useState(null)
+
+
 
     const submit = async (event)=>{
         event.preventDefault()
-        console.log(form)
+        //console.log(form)
+        
+
+        // if (form.password.length < 8) {
+        
         try {
             const response = await fetch(
                 "https://fsa-jwt-practice.herokuapp.com/signup",
@@ -27,17 +36,23 @@ function SignUp(){
             );
 
             const result = await response.json();
-            console.log(result);
+            setToken(result.token);
+            //console.log(result)
         }catch(error){
             console.log(error)
         }
+
+    //  } else {
+    //     setPassError("Password needs to be at least 8 characters")}
     }
 
     const setChange = (event)=>{
         const newObj = {...form};
         newObj[event.target.name]=event.target.value;
         setForm(newObj)
-        // console.log(form)
+        console.log(event)
+
+        //console.log(form)
     }
 
 
@@ -48,7 +63,9 @@ function SignUp(){
                 <input type="password" name={"password"} onChange={setChange} placeholder={"password..."}/>
                 <input id={"submit"} type="submit" value={"Submit"}/>
             </form>
+
+            
+
         </>
     )
 }
-export default SignUp;
