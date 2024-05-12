@@ -22,3 +22,7 @@ form {
 p {
   margin: 0px;
 }
+
+.passError {
+  color: red;
+}
